@@ -1,1 +1,1 @@
-# ucihacks
+# UCI Hacks 2019
