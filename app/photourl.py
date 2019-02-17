@@ -16,7 +16,7 @@ def get_urls():
     subreddit = reddit.subreddit(sub)
     url_list = list()
 
-    for submission in subreddit.hot(limit=25):
+    for submission in subreddit.hot(limit=30):
         url_text = submission.url
         has_domain = any(string in url_text for string in check_words)
 

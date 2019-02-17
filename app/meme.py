@@ -15,7 +15,7 @@ def pick_url():
 def pick_title():
     return random.choice(get_subreddit_titles("dogshowerthoughts"))
 
-def get_meme():
+def show_meme():
     with open('pic1.jpg', 'wb') as handle:
         response = requests.get(pick_url(), stream=True)
 
@@ -32,13 +32,26 @@ def get_meme():
 
         try:
             img = Image.open(image_name)
+            img.resize((500, 500))
+            w, d = img.size
+            print("width,height:", w, d)
             img.load()
         except IOError:
             pass
 
-        return img
-        # draw = ImageDraw.Draw(img)
-        # font = ImageFont.truetype("Roboto-Black.ttf", 120)
-        # text = pick_title()
-        # draw.text((0, 0),text,(255,255,255),font=font)
-        # img.show()
+        draw = ImageDraw.Draw(img)
+        font = ImageFont.truetype("Roboto-Black.ttf", 70)
+        text = pick_title()
+        print(text)
+        count = 0
+        res_text = ""
+        for letter in text:
+            if count > 30 and letter == ' ':
+                res_text += letter
+                res_text += '\n'
+                count = 0
+                continue
+            res_text += letter
+            count += 1
+        draw.text((0, 0),res_text,(255,0,0),font=font)
+        img.show()
