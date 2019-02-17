@@ -38,4 +38,9 @@ def get_content(post_id):
     contents['title'] = post.title
     contents['selftext'] = post.selftext
 
+    #Added
+    contents['images'] = post.images
+
+
+
     return json.dumps(contents)
