@@ -2,8 +2,6 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 
-import urllib
-
 import requests
 
 
@@ -50,4 +48,4 @@ if __name__ == '__main__':
     text = "Hello World!"
     draw.text((0, 0),text,(255,255,255),font=font)
     img.show()
-    #img.save('sample-out.jpg')
+    # img.save('sample-out.jpg')
