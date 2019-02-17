@@ -1,35 +1,28 @@
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCTATED_IMAGES=True
 
+import os
 import requests
+from photourl import get_urls
+from prawdata import get_subreddit_titles
+import random
+
+def pick_url():
+    return random.choice(get_urls())
+
+def pick_title():
+    return random.choice(get_subreddit_titles("dogshowerthoughts"))
 
 
-
-
-if __name__ == '__main__':
-    #image_name = "download.jpg"
-
-    #urllib.urlretrieve("https://i.redd.it/s9rva3317xg21.jpg", "00000001.jpg")
-
-    # f = open('00000001.jpg', 'wb')
-    # f.write(urllib.request.urlopen('https://i.redd.it/s9rva3317xg21.jpg').read())
-    # f.close()
-
-    # image_url = "https://i.redd.it/s9rva3317xg21.jpg"
-    # img_data = requests.get(image_url).content
-    # with open('image_name.jpg', 'wb') as handler:
-    #     handler.write(img_data)
-
-    pic_url = "https://i.redd.it/s9rva3317xg21.jpg"
-
-
-
+def show_meme():
     with open('pic1.jpg', 'wb') as handle:
-        response = requests.get(pic_url, stream=True)
+        response = requests.get(pick_url(), stream=True)
 
         if not response.ok:
-            print (response)
+            print(response)
 
         for block in response.iter_content(1024):
             if not block:
@@ -37,15 +30,19 @@ if __name__ == '__main__':
 
             handle.write(block)
 
-    image_name = "pic1.jpg"
+        image_name = "pic1.jpg"
 
-    try:
-        img = Image.open(image_name)
-    except IOError:
-        pass
-    draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("Roboto-Black.ttf", 16)
-    text = "Hello World!"
-    draw.text((0, 0),text,(255,255,255),font=font)
-    img.show()
-    # img.save('sample-out.jpg')
+        try:
+            img = Image.open(image_name)
+        except IOError:
+            print("IOError")
+            pass
+
+        draw = ImageDraw.Draw(img)
+        font = ImageFont.truetype("Roboto-Black.ttf", 100)
+        text = pick_title()
+        draw.text((0, 0),text,(255,255,255),font=font)
+        img.show()
+
+
+show_meme()

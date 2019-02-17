@@ -29,7 +29,20 @@ def get_subreddit(subreddit):
         submission_info = {"title": submission.title, "link": submission.shortlink, "id": submission.id}
         submissions["submissions"].append(submission_info)
 
-    submissions
+    return submissions
+
+def get_subreddit_titles(subreddit):
+    if not subreddit_exists(subreddit):
+        return {}
+
+    subreddit = reddit.subreddit(subreddit)
+
+    titles = list()
+
+    for submission in subreddit.hot(limit=MAX_POSTS):
+        titles.append(submission.title)
+
+    return titles
 
 def get_content(post_id):
     post = reddit.submission(id=post_id)
@@ -37,4 +50,4 @@ def get_content(post_id):
     contents['title'] = post.title
     contents['selftext'] = post.selftext
 
-    contents
+    return contents
